@@ -1,4 +1,5 @@
 # Hierarchy Color Tags
+<img width="200" alt="ColorHierarchy" src="https://github.com/user-attachments/assets/08ed9d45-5002-4ef6-b2eb-276fa50c5283" />
 
 Color-code GameObjects in the Hierarchy window so you can spot groups of related objects at a
 glance — no components, no runtime cost. Tags are stored using Unity's own per-object icon
