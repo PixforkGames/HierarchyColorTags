@@ -27,6 +27,9 @@ Or, for local development, add it as a local path dependency in the consuming pr
 
 ## Usage
 
+https://github.com/user-attachments/assets/e140faf3-cf36-4fde-9214-f7a48571f3c3
+
+
 - **Shift+right-click** any row in the Hierarchy to open a swatch picker at the cursor. Click a
   color to apply it, or press **1–8** to pick one, **0** to clear, **Esc** to cancel.
 - If the clicked row is part of your current selection, the color applies to the whole
