@@ -1,0 +1,18 @@
+{
+  "name": "com.pixforkgames.hierarchy-colors",
+  "version": "1.0.0",
+  "displayName": "Hierarchy Color Tags",
+  "description": "Color-code GameObjects in the Hierarchy window. Shift+right-click any row for an instant swatch picker (with number-key shortcuts), or use the GameObject > Color Tag menu. No components, no per-object overhead — colors are stored as the Hierarchy icon override and are purely an editor convenience.",
+  "unity": "6000.0",
+  "author": {
+    "name": "Pixfork Games"
+  },
+  "keywords": [
+    "hierarchy",
+    "editor",
+    "organization",
+    "color",
+    "tags",
+    "productivity"
+  ]
+}

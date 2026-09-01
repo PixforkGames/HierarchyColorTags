@@ -1,0 +1,19 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+
+# In case this package is ever opened/tested via an embedded local Unity project
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/Logs/
+/UserSettings/
+*.csproj
+*.sln
+*.unityproj
+.vs/
+.vscode/
+.idea/
