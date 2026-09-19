@@ -112,7 +112,6 @@ namespace PixforkGames.HierarchyColorTags.Editor {
                 } else {
                     SessionState.SetString(key, string.Join("\n", paths));
                 }
-                Debug.Log($"[HierarchyExpandStatePersistence] SaveExpandedPaths window {i}: {paths.Count} path(s): {string.Join(", ", paths)}");
             }
         }
 
