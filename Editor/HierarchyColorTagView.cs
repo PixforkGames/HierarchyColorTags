@@ -88,9 +88,13 @@ namespace PixforkGames.HierarchyColorTags.Editor {
             evt.StopImmediatePropagation();
         }
 
-        // Inserted as the item's first child, i.e. behind the "hierarchy-item__container" child
-        // that holds the icon and label — UI Toolkit draws children in order, so this renders
-        // as a full-row tint sitting behind the text rather than a swatch next to it.
+        // Inserted as the row container's first child (NOT the HierarchyViewItem itself), so it
+        // renders as a full-row tint behind the icon/label without touching the item's own
+        // top-level children — HierarchyViewItem.Toggle (the expand/collapse foldout control) is
+        // one of those siblings, and inserting directly into the item at index 0 was found to
+        // disturb Unity's row virtualization/foldout state on rebind (e.g. every row rebinds when
+        // entering Play Mode), collapsing every expanded group. RowContainer is the container
+        // Unity itself exposes for this kind of per-row customization.
         private static VisualElement GetOrCreateSwatch(HierarchyViewItem item) {
             VisualElement swatch = item.Q<VisualElement>(SwatchName);
             if (swatch == null) {
@@ -100,7 +104,7 @@ namespace PixforkGames.HierarchyColorTags.Editor {
                 swatch.style.right = 0;
                 swatch.style.top = 0;
                 swatch.style.bottom = 0;
-                item.Insert(0, swatch);
+                item.RowContainer.Insert(0, swatch);
             }
             return swatch;
         }
