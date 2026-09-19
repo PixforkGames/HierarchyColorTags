@@ -1,4 +1,5 @@
 # Hierarchy Color Tags
+<img width="200" alt="ColorHierarchy" src="https://github.com/user-attachments/assets/08ed9d45-5002-4ef6-b2eb-276fa50c5283" />
 
 Color-code GameObjects in the Hierarchy window so you can spot groups of related objects at a
 glance — no components, no runtime cost. Tags are stored using Unity's own per-object icon
@@ -26,6 +27,9 @@ Or, for local development, add it as a local path dependency in the consuming pr
 ```
 
 ## Usage
+
+https://github.com/user-attachments/assets/e140faf3-cf36-4fde-9214-f7a48571f3c3
+
 
 - **Shift+right-click** any row in the Hierarchy to open a swatch picker at the cursor. Click a
   color to apply it, or press **1–8** to pick one, **0** to clear, **Esc** to cancel.
