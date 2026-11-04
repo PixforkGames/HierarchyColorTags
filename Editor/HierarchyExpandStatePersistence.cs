@@ -94,8 +94,15 @@ namespace PixforkGames.HierarchyColorTags.Editor {
                 HierarchyView view = windows[i].View;
                 if (view == null) continue;
 
-                HierarchyGameObjectHandler handler =
-                    view.ViewModel.Hierarchy.GetOrCreateNodeTypeHandler<HierarchyGameObjectHandler>();
+                // Unity 6.6 made every route from the view model to the Hierarchy
+                // error-obsolete (ViewModel.Hierarchy, ViewModel.HierarchyFlattned,
+                // HierarchyFlattened.Hierarchy). The surviving route is via a node
+                // type handler, whose Hierarchy property is still public API.
+                HierarchyNode root = view.ViewModel.GetRoot();
+                HierarchyGameObjectHandler handler = view.ViewModel
+                    .GetNodeTypeHandlerBase(root)
+                    .Hierarchy
+                    .GetOrCreateNodeTypeHandler<HierarchyGameObjectHandler>();
                 HierarchyNode[] expanded = view.ViewModel.GetNodesWithFlags(HierarchyNodeFlags.Expanded);
 
                 List<string> paths = new List<string>(expanded.Length);
@@ -128,8 +135,15 @@ namespace PixforkGames.HierarchyColorTags.Editor {
                 HierarchyView view = windows[i].View;
                 if (view == null) continue;
 
-                HierarchyGameObjectHandler handler =
-                    view.ViewModel.Hierarchy.GetOrCreateNodeTypeHandler<HierarchyGameObjectHandler>();
+                // Unity 6.6 made every route from the view model to the Hierarchy
+                // error-obsolete (ViewModel.Hierarchy, ViewModel.HierarchyFlattned,
+                // HierarchyFlattened.Hierarchy). The surviving route is via a node
+                // type handler, whose Hierarchy property is still public API.
+                HierarchyNode root = view.ViewModel.GetRoot();
+                HierarchyGameObjectHandler handler = view.ViewModel
+                    .GetNodeTypeHandlerBase(root)
+                    .Hierarchy
+                    .GetOrCreateNodeTypeHandler<HierarchyGameObjectHandler>();
 
                 for (int p = 0; p < paths.Length; p++) {
                     GameObject go = GameObject.Find(paths[p]);
