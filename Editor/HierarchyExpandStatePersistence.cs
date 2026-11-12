@@ -94,16 +94,9 @@ namespace PixforkGames.HierarchyColorTags.Editor {
                 HierarchyView view = windows[i].View;
                 if (view == null) continue;
 
-                // Unity 6.6 made every route from the view model to the Hierarchy
-                // error-obsolete (ViewModel.Hierarchy, ViewModel.HierarchyFlattned,
-                // HierarchyFlattened.Hierarchy). The surviving route is via a node
-                // type handler, whose Hierarchy property is still public API.
-                HierarchyNode root = view.ViewModel.GetRoot();
-                HierarchyGameObjectHandler handler = view.ViewModel
-                    .GetNodeTypeHandlerBase(root)
-                    .Hierarchy
-                    .GetOrCreateNodeTypeHandler<HierarchyGameObjectHandler>();
                 HierarchyNode[] expanded = view.ViewModel.GetNodesWithFlags(HierarchyNodeFlags.Expanded);
+                HierarchyGameObjectHandler handler = GetGameObjectHandler(view.ViewModel, expanded);
+                if (handler == null) continue;
 
                 List<string> paths = new List<string>(expanded.Length);
                 for (int n = 0; n < expanded.Length; n++) {
@@ -135,15 +128,8 @@ namespace PixforkGames.HierarchyColorTags.Editor {
                 HierarchyView view = windows[i].View;
                 if (view == null) continue;
 
-                // Unity 6.6 made every route from the view model to the Hierarchy
-                // error-obsolete (ViewModel.Hierarchy, ViewModel.HierarchyFlattned,
-                // HierarchyFlattened.Hierarchy). The surviving route is via a node
-                // type handler, whose Hierarchy property is still public API.
-                HierarchyNode root = view.ViewModel.GetRoot();
-                HierarchyGameObjectHandler handler = view.ViewModel
-                    .GetNodeTypeHandlerBase(root)
-                    .Hierarchy
-                    .GetOrCreateNodeTypeHandler<HierarchyGameObjectHandler>();
+                HierarchyGameObjectHandler handler = GetGameObjectHandler(view.ViewModel, null);
+                if (handler == null) continue;
 
                 for (int p = 0; p < paths.Length; p++) {
                     GameObject go = GameObject.Find(paths[p]);
@@ -153,6 +139,23 @@ namespace PixforkGames.HierarchyColorTags.Editor {
                     view.Expand(node);
                 }
             }
+        }
+
+        // Unity 6.6 made every route from the view model to the Hierarchy error-obsolete
+        // (ViewModel.Hierarchy, ViewModel.HierarchyFlattned, HierarchyFlattened.Hierarchy). The
+        // surviving route is via a node type handler, whose Hierarchy property is still public API.
+        // The root node can have no handler (GetNodeTypeHandlerBase returns null for it, seen on
+        // exiting Play Mode), so fall back to any expanded node's handler; null when there is none.
+        private static HierarchyGameObjectHandler GetGameObjectHandler(HierarchyViewModel viewModel,
+            HierarchyNode[] expanded) {
+            if (viewModel == null) return null;
+            var found = viewModel.GetNodeTypeHandlerBase(viewModel.GetRoot());
+            if (found == null) {
+                if (expanded == null) expanded = viewModel.GetNodesWithFlags(HierarchyNodeFlags.Expanded);
+                for (int n = 0; n < expanded.Length && found == null; n++)
+                    found = viewModel.GetNodeTypeHandlerBase(expanded[n]);
+            }
+            return found?.Hierarchy?.GetOrCreateNodeTypeHandler<HierarchyGameObjectHandler>();
         }
 
         private static string GetPath(GameObject go) {
